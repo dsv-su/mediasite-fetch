@@ -17,3 +17,8 @@ This file is required for this tool to work. It contains credentials for Mediasi
         }
 }
 ```
+## Usage
+```bash
+php mediasite.php -u %username% -op 1
+```
+This will dump the report file to the output buffer, so it is then could be read by any other tool.
