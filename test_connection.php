@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 $url = 'http://localhost/mediasite/mediasite.php';
 $mediasite = new Client();
 $username = 'liwu9416';
+
 try {
   $response = $mediasite->head("$url"."?op=1&username=$username");
   if ($response->getStatusCode() == 200) {

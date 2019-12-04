@@ -50,9 +50,9 @@ $timestart = time();
 // Try to generate a user report.
 
 try {
-  $date = date('Y-m-d H:i:s');
+  $startdate = date('Y-m-d H:i:s');
   $json = [
-    "Name" => "$username $date",
+    "Name" => "$username",
     "UserList" => ["$username"],
     "Owner" => "psoko@su.se",
     "DateRangeType" => "AllDates",
@@ -122,7 +122,7 @@ try {
         $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => $info]]);
         if ($status == 'Successful') {
           $date = date('Y-m-d H:i:s');
-          $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => "Completed on $date. Link to the file: $link"]]);
+          $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => "Started on $startdate.\n Completed on $date. \nReport file url: $link"]]);
           saveFile($username, $link);
           http_response_code(200);
           break;
