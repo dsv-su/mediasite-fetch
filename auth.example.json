@@ -1,0 +1,15 @@
+{
+    "play2":
+        {
+            "username": "username",
+            "password": "password",
+            "url": "apiurl",
+            "sfapikey": "apikey"
+        },
+    "daisy":
+        {
+            "username": "username",
+            "password": "password",
+            "url": "apiurl"
+        }
+}
