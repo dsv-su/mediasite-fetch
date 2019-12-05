@@ -59,7 +59,16 @@ try {
     "TimeZoneId" => 72,
     "IncludeItemsWithZeroViews" => True
     ];
-  $reportid = findUserReportByName($username);
+  $report = findUserReportByName($username);
+  $reportid = $report['Id'];
+  $data = json_decode($report['Description']);
+  if ($data->CompletedOn + 3600 > time()) {
+    if ($data->Status == 'ExportSuccessful' && !empty($data->Link)) {
+      saveFile($username, $data->Link);
+      http_response_code(200);
+      die();
+    }
+  }
   if (!$reportid) {
     $request = $mediasite->post($apiurl."/UserReports", ['json' => $json]);
     if ($request->getStatusCode() == '200') {
@@ -122,7 +131,7 @@ try {
         $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => $info]]);
         if ($status == 'Successful') {
           $date = date('Y-m-d H:i:s');
-          $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => "Started on $startdate.\n Completed on $date. \nReport file url: $link"]]);
+          $p = $mediasite->patch($apiurl."/UserReports('$reportid')", ['json' => ["Description" => json_encode(["Status" => "Export$status", "CompletedOn" => time(), "ReportId" => $reportid, "ResultId" => $resultid, "Link" => $link])]]);
           saveFile($username, $link);
           http_response_code(200);
           break;
@@ -160,7 +169,7 @@ function findUserReportByName ($name) {
   foreach ($reports as $report) {
     if (strpos($report['Name'], $name) !== FALSE) {
       //echo "Found existing UserReport, replacing it with new data\n";
-      return $report['Id'];
+      return $report;
     }
   }
   return false;

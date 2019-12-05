@@ -10,36 +10,15 @@ require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
 
-$url = 'http://localhost/mediasite/mediasite.php';
+$url = 'http://localhost/mediasite/mediasite-gdpr/mediasite.php';
 $mediasite = new Client();
-$username = 'liwu9416';
+$username = 'tdsv';
 
 try {
-  $response = $mediasite->head("$url"."?op=1&username=$username");
+  $myFile = fopen("$username.xls", 'w') or die('Problems');
+  $response = $mediasite->request('GET', "$url"."?op=1&username=$username", ['sink' => $myFile]);
   if ($response->getStatusCode() == 200) {
-    $myFile = fopen("$username.xls", 'w') or die('Problems');
-    $response = $mediasite->request('GET', "$url"."?op=1&username=$username", ['sink' => $myFile]);
-    if (['response_code'=>$response->getStatusCode()]) {
-      echo "FILE DOWNLOADED\n";
-    }
-  }
-} catch (Exception $e) {
-  echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
-exit;
-
-$url = 'https://ilearn2test.dsv.su.se/gdpr';
-$moodle = new Client();
-
-try {
-  $response = $moodle->head("$url/moodle.php".'?op=1&username=tdsv');
-  if ($response->getStatusCode() == 200) {
-    $myFile = fopen('tdsv.zip', 'w') or die('Problems');
-    $response = $moodle->request('GET', "$url/moodle.php".'?op=1&username=tdsv', ['sink' => $myFile]);
-    if (['response_code'=>$response->getStatusCode()]) {
-      echo "FILE DOWNLOADED\n";
-    }
+    echo "FILE DOWNLOADED\n";
   }
 } catch (Exception $e) {
   echo 'Caught exception: ',  $e->getMessage(), "\n";
