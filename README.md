@@ -19,6 +19,6 @@ This file is required for this tool to work. It contains credentials for Mediasi
 ```
 ## Usage
 ```bash
-php mediasite.php -u(--username) %username% -o(--op) 1
+php mediasite.php -u(--username) %username% -o(--op) 1 -t(--ticket) %ticket%
 ```
 This will dump the report file to the output buffer, so it is then could be read by any other tool.
