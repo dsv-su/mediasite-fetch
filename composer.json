@@ -1,6 +1,6 @@
 {
 	"require": {
-		"guzzlehttp/guzzle": "~6.4.1"
+		"guzzlehttp/guzzle": "~6.5.8"
 	},
 	"prefer-stable": true
 }
